@@ -1,4 +1,4 @@
-name: Deploy
+name: Deploy2
 
 on:
   push:
@@ -35,4 +35,3 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: _html
-          
