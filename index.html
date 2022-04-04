@@ -14533,35 +14533,35 @@ all of MD as it is not optimized for dense, information rich UIs.
     </p>
     <h1>
      <center>
-      Topic Name
+      Insight into CO2 Emissions
      </center>
     </h1>
     <h4>
      <center>
       <a href="https://author1.github.io/" style="text-decoration:none">
-       Author 1
+       Harshil Purohit
       </a>
       , IIT Gandhinagar,
-      <a href="mailto:&lt;author1&gt;@iitgn.ac.in" style="text-decoration:none">
-       author1@iitgn.ac.in
+      <a href="mailto:harshil.p&gt;@iitgn.ac.in" style="text-decoration:none">
+       harshil.p@iitgn.ac.in
       </a>
       <br/>
       <br/>
       <a href="https://author2.github.io/" style="text-decoration:none">
-       Author 2
+       Mihir Chauhan
       </a>
       , IIT Gandhinagar,
-      <a href="mailto:&lt;author2&gt;@iitgn.ac.in" style="text-decoration:none">
-       author2@iitgn.ac.in
+      <a href="mailto:mihir.hc@iitgn.ac.in" style="text-decoration:none">
+       mihir.hc@iitgn.ac.in
       </a>
       <br/>
       <br/>
-      <a href="https://author3.github.io/" style="text-decoration:none">
-       Author 3
+      <a href="https://divyanshu0x16.github.io/" style="text-decoration:none">
+       Divyanshu Meena
       </a>
       , IIT Gandhinagar,
-      <a href="mailto:&lt;author3&gt;@iitgn.ac.in" style="text-decoration:none">
-       author3@iitgn.ac.in
+      <a href="mailto:divyanshu.m@iitgn.ac.in" style="text-decoration:none">
+       divyanshu.m@iitgn.ac.in
       </a>
      </center>
     </h4>
@@ -14571,9 +14571,1203 @@ all of MD as it is not optimized for dense, information rich UIs.
    <div class="jp-InputPrompt jp-InputArea-prompt">
    </div>
    <div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+    <h2 id="CO2-Emissions-Dataset">
+     CO2 Emissions Dataset
+     <a class="anchor-link" href="#CO2-Emissions-Dataset">
+      ¶
+     </a>
+    </h2>
+   </div>
+  </div>
+  <div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+   <div class="jp-Cell-inputWrapper">
+    <div class="jp-InputArea jp-Cell-inputArea">
+     <div class="jp-InputPrompt jp-InputArea-prompt">
+      In [3]:
+     </div>
+     <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+      <div class="CodeMirror cm-s-jupyter">
+       <div class="highlight hl-ipython3">
+        <pre><span></span><span class="c1"># Common imports</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
+</pre>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+  <div class="jp-Cell-inputWrapper">
+   <div class="jp-InputPrompt jp-InputArea-prompt">
+   </div>
+   <div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
     <p>
-     <a href="https://github.com/&lt;repo_user&gt;/&lt;repo_name&gt;">
-      <img alt="Repo" src="https://img.shields.io/badge/GitHub-&lt;repo_name&gt;-brightgreen"/>
+     Adding mapping between country code and continents
+    </p>
+   </div>
+  </div>
+  <div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+   <div class="jp-Cell-inputWrapper">
+    <div class="jp-InputArea jp-Cell-inputArea">
+     <div class="jp-InputPrompt jp-InputArea-prompt">
+      In [4]:
+     </div>
+     <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+      <div class="CodeMirror cm-s-jupyter">
+       <div class="highlight hl-ipython3">
+        <pre><span></span><span class="n">iso_continents_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"./data/country-and-continent-codes-list.csv.gz"</span><span class="p">,</span> <span class="n">compression</span><span class="o">=</span><span class="s2">"gzip"</span><span class="p">)</span>
+<span class="n">iso_continents_df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'5ecdb312191a3559cde51177f4fb3b35.csv'</span><span class="p">:</span> <span class="s1">'Continent'</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">required_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'Three_Letter_Country_Code'</span><span class="p">,</span> <span class="s1">'Continent'</span><span class="p">]</span>
+<span class="n">iso_continents_df</span> <span class="o">=</span> <span class="n">iso_continents_df</span><span class="p">[</span><span class="n">required_columns</span><span class="p">]</span>
+<span class="n">iso_continents</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">iso_continents_df</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+</pre>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+  <div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+   <div class="jp-Cell-inputWrapper">
+    <div class="jp-InputArea jp-Cell-inputArea">
+     <div class="jp-InputPrompt jp-InputArea-prompt">
+      In [5]:
+     </div>
+     <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+      <div class="CodeMirror cm-s-jupyter">
+       <div class="highlight hl-ipython3">
+        <pre><span></span><span class="n">co2_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">"./data/owid-co2-data.csv.gz"</span><span class="p">,</span> <span class="n">compression</span><span class="o">=</span><span class="s2">"gzip"</span><span class="p">)</span>
+<span class="n">co2_df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'286b262ed4f75089c2a23c4ed4782e1f.csv'</span><span class="p">:</span> <span class="s1">'iso_code'</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">co2_df</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+   <div class="jp-Cell-outputWrapper">
+    <div class="jp-OutputArea jp-Cell-outputArea">
+     <div class="jp-OutputArea-child">
+      <div class="jp-OutputPrompt jp-OutputArea-prompt">
+      </div>
+      <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
+       <div>
+        <style scoped="">
+         .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+        </style>
+        <table border="1" class="dataframe">
+         <thead>
+          <tr style="text-align: right;">
+           <th>
+           </th>
+           <th>
+            iso_code
+           </th>
+           <th>
+            country
+           </th>
+           <th>
+            year
+           </th>
+           <th>
+            co2
+           </th>
+           <th>
+            co2_per_capita
+           </th>
+           <th>
+            trade_co2
+           </th>
+           <th>
+            cement_co2
+           </th>
+           <th>
+            cement_co2_per_capita
+           </th>
+           <th>
+            coal_co2
+           </th>
+           <th>
+            coal_co2_per_capita
+           </th>
+           <th>
+            ...
+           </th>
+           <th>
+            ghg_excluding_lucf_per_capita
+           </th>
+           <th>
+            methane
+           </th>
+           <th>
+            methane_per_capita
+           </th>
+           <th>
+            nitrous_oxide
+           </th>
+           <th>
+            nitrous_oxide_per_capita
+           </th>
+           <th>
+            population
+           </th>
+           <th>
+            gdp
+           </th>
+           <th>
+            primary_energy_consumption
+           </th>
+           <th>
+            energy_per_capita
+           </th>
+           <th>
+            energy_per_gdp
+           </th>
+          </tr>
+         </thead>
+         <tbody>
+          <tr>
+           <th>
+            13310
+           </th>
+           <td>
+            LBY
+           </td>
+           <td>
+            Libya
+           </td>
+           <td>
+            2001.0
+           </td>
+           <td>
+            48.463
+           </td>
+           <td>
+            8.903
+           </td>
+           <td>
+            NaN
+           </td>
+           <td>
+            1.208
+           </td>
+           <td>
+            0.222
+           </td>
+           <td>
+            NaN
+           </td>
+           <td>
+            NaN
+           </td>
+           <td>
+            ...
+           </td>
+           <td>
+            21.195
+           </td>
+           <td>
+            71.86
+           </td>
+           <td>
+            13.202
+           </td>
+           <td>
+            1.35
+           </td>
+           <td>
+            0.248
+           </td>
+           <td>
+            5443249.0
+           </td>
+           <td>
+            5.422566e+10
+           </td>
+           <td>
+            214.833
+           </td>
+           <td>
+            39469.530
+           </td>
+           <td>
+            1.918
+           </td>
+          </tr>
+          <tr>
+           <th>
+            23640
+           </th>
+           <td>
+            GBR
+           </td>
+           <td>
+            United Kingdom
+           </td>
+           <td>
+            1827.0
+           </td>
+           <td>
+            52.230
+           </td>
+           <td>
+            2.248
+           </td>
+           <td>
+            NaN
+           </td>
+           <td>
+            NaN
+           </td>
+           <td>
+            NaN
+           </td>
+           <td>
+            52.23
+           </td>
+           <td>
+            2.248
+           </td>
+           <td>
+            ...
+           </td>
+           <td>
+            NaN
+           </td>
+           <td>
+            NaN
+           </td>
+           <td>
+            NaN
+           </td>
+           <td>
+            NaN
+           </td>
+           <td>
+            NaN
+           </td>
+           <td>
+            23233511.0
+           </td>
+           <td>
+            8.143922e+10
+           </td>
+           <td>
+            NaN
+           </td>
+           <td>
+            NaN
+           </td>
+           <td>
+            NaN
+           </td>
+          </tr>
+          <tr>
+           <th>
+            603
+           </th>
+           <td>
+            ATG
+           </td>
+           <td>
+            Antigua and Barbuda
+           </td>
+           <td>
+            1991.0
+           </td>
+           <td>
+            0.213
+           </td>
+           <td>
+            3.354
+           </td>
+           <td>
+            NaN
+           </td>
+           <td>
+            NaN
+           </td>
+           <td>
+            NaN
+           </td>
+           <td>
+            NaN
+           </td>
+           <td>
+            NaN
+           </td>
+           <td>
+            ...
+           </td>
+           <td>
+            5.839
+           </td>
+           <td>
+            0.13
+           </td>
+           <td>
+            2.052
+           </td>
+           <td>
+            0.02
+           </td>
+           <td>
+            0.316
+           </td>
+           <td>
+            63363.0
+           </td>
+           <td>
+            NaN
+           </td>
+           <td>
+            1.745
+           </td>
+           <td>
+            27692.549
+           </td>
+           <td>
+            NaN
+           </td>
+          </tr>
+          <tr>
+           <th>
+            14257
+           </th>
+           <td>
+            MTQ
+           </td>
+           <td>
+            Martinique
+           </td>
+           <td>
+            2008.0
+           </td>
+           <td>
+            2.159
+           </td>
+           <td>
+            5.429
+           </td>
+           <td>
+            NaN
+           </td>
+           <td>
+            NaN
+           </td>
+           <td>
+            NaN
+           </td>
+           <td>
+            NaN
+           </td>
+           <td>
+            NaN
+           </td>
+           <td>
+            ...
+           </td>
+           <td>
+            NaN
+           </td>
+           <td>
+            NaN
+           </td>
+           <td>
+            NaN
+           </td>
+           <td>
+            NaN
+           </td>
+           <td>
+            NaN
+           </td>
+           <td>
+            397664.0
+           </td>
+           <td>
+            NaN
+           </td>
+           <td>
+            9.896
+           </td>
+           <td>
+            24863.328
+           </td>
+           <td>
+            NaN
+           </td>
+          </tr>
+          <tr>
+           <th>
+            8975
+           </th>
+           <td>
+            NaN
+           </td>
+           <td>
+            French West Africa
+           </td>
+           <td>
+            1958.0
+           </td>
+           <td>
+            NaN
+           </td>
+           <td>
+            NaN
+           </td>
+           <td>
+            NaN
+           </td>
+           <td>
+            NaN
+           </td>
+           <td>
+            NaN
+           </td>
+           <td>
+            NaN
+           </td>
+           <td>
+            NaN
+           </td>
+           <td>
+            ...
+           </td>
+           <td>
+            NaN
+           </td>
+           <td>
+            NaN
+           </td>
+           <td>
+            NaN
+           </td>
+           <td>
+            NaN
+           </td>
+           <td>
+            NaN
+           </td>
+           <td>
+            NaN
+           </td>
+           <td>
+            NaN
+           </td>
+           <td>
+            NaN
+           </td>
+           <td>
+            NaN
+           </td>
+           <td>
+            NaN
+           </td>
+          </tr>
+         </tbody>
+        </table>
+        <p>
+         5 rows × 60 columns
+        </p>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+  <div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+   <div class="jp-Cell-inputWrapper">
+    <div class="jp-InputArea jp-Cell-inputArea">
+     <div class="jp-InputPrompt jp-InputArea-prompt">
+      In [6]:
+     </div>
+     <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+      <div class="CodeMirror cm-s-jupyter">
+       <div class="highlight hl-ipython3">
+        <pre><span></span><span class="n">co2_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">5</span><span class="p">][</span><span class="s2">"iso_code"</span><span class="p">]</span>
+</pre>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+   <div class="jp-Cell-outputWrapper">
+    <div class="jp-OutputArea jp-Cell-outputArea">
+     <div class="jp-OutputArea-child">
+      <div class="jp-OutputPrompt jp-OutputArea-prompt">
+      </div>
+      <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+       <pre>'AFG'</pre>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+  <div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+   <div class="jp-Cell-inputWrapper">
+    <div class="jp-InputArea jp-Cell-inputArea">
+     <div class="jp-InputPrompt jp-InputArea-prompt">
+      In [7]:
+     </div>
+     <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+      <div class="CodeMirror cm-s-jupyter">
+       <div class="highlight hl-ipython3">
+        <pre><span></span><span class="n">required_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"iso_code"</span><span class="p">,</span> <span class="s2">"country"</span><span class="p">,</span> <span class="s2">"year"</span><span class="p">,</span> <span class="s2">"co2_per_capita"</span><span class="p">,</span> <span class="s2">"co2"</span><span class="p">]</span>
+<span class="n">globe_df</span> <span class="o">=</span> <span class="n">co2_df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span> <span class="o">=</span> <span class="n">required_columns</span><span class="p">)</span>
+<span class="n">globe_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">5</span><span class="p">][</span><span class="s2">"iso_code"</span><span class="p">]</span>
+</pre>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+   <div class="jp-Cell-outputWrapper">
+    <div class="jp-OutputArea jp-Cell-outputArea">
+     <div class="jp-OutputArea-child">
+      <div class="jp-OutputPrompt jp-OutputArea-prompt">
+      </div>
+      <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
+       <pre>'AFG'</pre>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+  <div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+   <div class="jp-Cell-inputWrapper">
+    <div class="jp-InputArea jp-Cell-inputArea">
+     <div class="jp-InputPrompt jp-InputArea-prompt">
+      In [8]:
+     </div>
+     <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+      <div class="CodeMirror cm-s-jupyter">
+       <div class="highlight hl-ipython3">
+        <pre><span></span><span class="n">required_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'iso_code'</span><span class="p">,</span> <span class="s1">'country'</span><span class="p">,</span> <span class="s1">'co2_per_capita'</span><span class="p">,</span> <span class="s2">"year"</span><span class="p">,</span> <span class="s2">"co2"</span><span class="p">]</span>
+<span class="n">globe_df</span> <span class="o">=</span> <span class="n">co2_df</span><span class="p">[</span><span class="n">required_columns</span><span class="p">]</span>
+
+<span class="n">globe_df</span> <span class="o">=</span> <span class="n">globe_df</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+<span class="n">globe_df</span><span class="p">[</span><span class="s2">"year"</span><span class="p">]</span> <span class="o">=</span> <span class="n">globe_df</span><span class="p">[</span><span class="s2">"year"</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">"int"</span><span class="p">)</span>
+<span class="c1"># globe_df.sample(5)</span>
+</pre>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+  <div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+   <div class="jp-Cell-inputWrapper">
+    <div class="jp-InputArea jp-Cell-inputArea">
+     <div class="jp-InputPrompt jp-InputArea-prompt">
+      In [9]:
+     </div>
+     <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+      <div class="CodeMirror cm-s-jupyter">
+       <div class="highlight hl-ipython3">
+        <pre><span></span><span class="n">globe_df</span><span class="p">[</span><span class="s1">'continent'</span><span class="p">]</span> <span class="o">=</span> <span class="n">globe_df</span><span class="p">[</span><span class="s1">'iso_code'</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">iso_continents</span><span class="p">)</span>
+<span class="n">globe_df_curr</span> <span class="o">=</span> <span class="n">globe_df</span><span class="p">[</span><span class="n">globe_df</span><span class="o">.</span><span class="n">year</span> <span class="o">==</span> <span class="mi">2019</span><span class="p">]</span>
+<span class="n">globe_df</span> <span class="o">=</span> <span class="n">globe_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">globe_df</span><span class="p">[</span><span class="s1">'continent'</span><span class="p">]</span><span class="o">.</span><span class="n">notnull</span><span class="p">())[</span><span class="mi">0</span><span class="p">]]</span> <span class="c1">#Remove values where continent is NaN</span>
+<span class="n">globe_df_curr</span> <span class="o">=</span> <span class="n">globe_df_curr</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">globe_df_curr</span><span class="p">[</span><span class="s1">'continent'</span><span class="p">]</span><span class="o">.</span><span class="n">notnull</span><span class="p">())[</span><span class="mi">0</span><span class="p">]]</span>
+</pre>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+  <div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+   <div class="jp-Cell-inputWrapper">
+    <div class="jp-InputArea jp-Cell-inputArea">
+     <div class="jp-InputPrompt jp-InputArea-prompt">
+      In [10]:
+     </div>
+     <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+      <div class="CodeMirror cm-s-jupyter">
+       <div class="highlight hl-ipython3">
+        <pre><span></span><span class="n">globe_df</span> <span class="o">=</span> <span class="n">globe_df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">'year'</span><span class="p">)</span>
+<span class="n">globe_df</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+   <div class="jp-Cell-outputWrapper">
+    <div class="jp-OutputArea jp-Cell-outputArea">
+     <div class="jp-OutputArea-child">
+      <div class="jp-OutputPrompt jp-OutputArea-prompt">
+      </div>
+      <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
+       <div>
+        <style scoped="">
+         .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+        </style>
+        <table border="1" class="dataframe">
+         <thead>
+          <tr style="text-align: right;">
+           <th>
+           </th>
+           <th>
+            iso_code
+           </th>
+           <th>
+            country
+           </th>
+           <th>
+            co2_per_capita
+           </th>
+           <th>
+            year
+           </th>
+           <th>
+            co2
+           </th>
+           <th>
+            continent
+           </th>
+          </tr>
+         </thead>
+         <tbody>
+          <tr>
+           <th>
+            3121
+           </th>
+           <td>
+            BES
+           </td>
+           <td>
+            Bonaire Sint Eustatius and Saba
+           </td>
+           <td>
+            58.957
+           </td>
+           <td>
+            1960
+           </td>
+           <td>
+            0.476
+           </td>
+           <td>
+            North America
+           </td>
+          </tr>
+          <tr>
+           <th>
+            23382
+           </th>
+           <td>
+            UKR
+           </td>
+           <td>
+            Ukraine
+           </td>
+           <td>
+            0.604
+           </td>
+           <td>
+            1902
+           </td>
+           <td>
+            14.441
+           </td>
+           <td>
+            Europe
+           </td>
+          </tr>
+          <tr>
+           <th>
+            12607
+           </th>
+           <td>
+            KGZ
+           </td>
+           <td>
+            Kyrgyzstan
+           </td>
+           <td>
+            0.142
+           </td>
+           <td>
+            1889
+           </td>
+           <td>
+            0.140
+           </td>
+           <td>
+            Asia
+           </td>
+          </tr>
+          <tr>
+           <th>
+            13583
+           </th>
+           <td>
+            LUX
+           </td>
+           <td>
+            Luxembourg
+           </td>
+           <td>
+            33.267
+           </td>
+           <td>
+            1976
+           </td>
+           <td>
+            11.862
+           </td>
+           <td>
+            Europe
+           </td>
+          </tr>
+          <tr>
+           <th>
+            242
+           </th>
+           <td>
+            ALB
+           </td>
+           <td>
+            Albania
+           </td>
+           <td>
+            1.309
+           </td>
+           <td>
+            1966
+           </td>
+           <td>
+            2.550
+           </td>
+           <td>
+            Europe
+           </td>
+          </tr>
+         </tbody>
+        </table>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+  <div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+   <div class="jp-Cell-inputWrapper">
+    <div class="jp-InputArea jp-Cell-inputArea">
+     <div class="jp-InputPrompt jp-InputArea-prompt">
+      In [11]:
+     </div>
+     <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+      <div class="CodeMirror cm-s-jupyter">
+       <div class="highlight hl-ipython3">
+        <pre><span></span><span class="n">globe_df</span>
+</pre>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+   <div class="jp-Cell-outputWrapper">
+    <div class="jp-OutputArea jp-Cell-outputArea">
+     <div class="jp-OutputArea-child">
+      <div class="jp-OutputPrompt jp-OutputArea-prompt">
+      </div>
+      <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html">
+       <div>
+        <style scoped="">
+         .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+        </style>
+        <table border="1" class="dataframe">
+         <thead>
+          <tr style="text-align: right;">
+           <th>
+           </th>
+           <th>
+            iso_code
+           </th>
+           <th>
+            country
+           </th>
+           <th>
+            co2_per_capita
+           </th>
+           <th>
+            year
+           </th>
+           <th>
+            co2
+           </th>
+           <th>
+            continent
+           </th>
+          </tr>
+         </thead>
+         <tbody>
+          <tr>
+           <th>
+            23563
+           </th>
+           <td>
+            GBR
+           </td>
+           <td>
+            United Kingdom
+           </td>
+           <td>
+            1.007
+           </td>
+           <td>
+            1750
+           </td>
+           <td>
+            9.351
+           </td>
+           <td>
+            Europe
+           </td>
+          </tr>
+          <tr>
+           <th>
+            23573
+           </th>
+           <td>
+            GBR
+           </td>
+           <td>
+            United Kingdom
+           </td>
+           <td>
+            1.020
+           </td>
+           <td>
+            1760
+           </td>
+           <td>
+            10.017
+           </td>
+           <td>
+            Europe
+           </td>
+          </tr>
+          <tr>
+           <th>
+            23583
+           </th>
+           <td>
+            GBR
+           </td>
+           <td>
+            United Kingdom
+           </td>
+           <td>
+            1.184
+           </td>
+           <td>
+            1770
+           </td>
+           <td>
+            12.274
+           </td>
+           <td>
+            Europe
+           </td>
+          </tr>
+          <tr>
+           <th>
+            23593
+           </th>
+           <td>
+            GBR
+           </td>
+           <td>
+            United Kingdom
+           </td>
+           <td>
+            1.377
+           </td>
+           <td>
+            1780
+           </td>
+           <td>
+            15.055
+           </td>
+           <td>
+            Europe
+           </td>
+          </tr>
+          <tr>
+           <th>
+            23603
+           </th>
+           <td>
+            GBR
+           </td>
+           <td>
+            United Kingdom
+           </td>
+           <td>
+            1.665
+           </td>
+           <td>
+            1790
+           </td>
+           <td>
+            19.174
+           </td>
+           <td>
+            Europe
+           </td>
+          </tr>
+          <tr>
+           <th>
+            ...
+           </th>
+           <td>
+            ...
+           </td>
+           <td>
+            ...
+           </td>
+           <td>
+            ...
+           </td>
+           <td>
+            ...
+           </td>
+           <td>
+            ...
+           </td>
+           <td>
+            ...
+           </td>
+          </tr>
+          <tr>
+           <th>
+            17769
+           </th>
+           <td>
+            PRY
+           </td>
+           <td>
+            Paraguay
+           </td>
+           <td>
+            1.061
+           </td>
+           <td>
+            2020
+           </td>
+           <td>
+            7.570
+           </td>
+           <td>
+            South America
+           </td>
+          </tr>
+          <tr>
+           <th>
+            3907
+           </th>
+           <td>
+            BDI
+           </td>
+           <td>
+            Burundi
+           </td>
+           <td>
+            0.051
+           </td>
+           <td>
+            2020
+           </td>
+           <td>
+            0.602
+           </td>
+           <td>
+            Africa
+           </td>
+          </tr>
+          <tr>
+           <th>
+            17906
+           </th>
+           <td>
+            PER
+           </td>
+           <td>
+            Peru
+           </td>
+           <td>
+            1.356
+           </td>
+           <td>
+            2020
+           </td>
+           <td>
+            44.706
+           </td>
+           <td>
+            South America
+           </td>
+          </tr>
+          <tr>
+           <th>
+            17483
+           </th>
+           <td>
+            PSE
+           </td>
+           <td>
+            Palestine
+           </td>
+           <td>
+            0.568
+           </td>
+           <td>
+            2020
+           </td>
+           <td>
+            2.899
+           </td>
+           <td>
+            Asia
+           </td>
+          </tr>
+          <tr>
+           <th>
+            25190
+           </th>
+           <td>
+            ZWE
+           </td>
+           <td>
+            Zimbabwe
+           </td>
+           <td>
+            0.709
+           </td>
+           <td>
+            2020
+           </td>
+           <td>
+            10.531
+           </td>
+           <td>
+            Africa
+           </td>
+          </tr>
+         </tbody>
+        </table>
+        <p>
+         20636 rows × 6 columns
+        </p>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+  <div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+   <div class="jp-Cell-inputWrapper">
+    <div class="jp-InputArea jp-Cell-inputArea">
+     <div class="jp-InputPrompt jp-InputArea-prompt">
+      In [12]:
+     </div>
+     <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+      <div class="CodeMirror cm-s-jupyter">
+       <div class="highlight hl-ipython3">
+        <pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">scatter_geo</span><span class="p">(</span><span class="n">globe_df_curr</span><span class="p">,</span> <span class="n">locations</span><span class="o">=</span><span class="s2">"iso_code"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"continent"</span><span class="p">,</span>
+                     <span class="n">hover_name</span><span class="o">=</span><span class="s2">"country"</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="s2">"co2_per_capita"</span><span class="p">,</span>
+                     <span class="n">projection</span><span class="o">=</span><span class="s2">"natural earth"</span><span class="p">,</span> <span class="n">template</span><span class="o">=</span><span class="s2">"plotly_dark"</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+   <div class="jp-Cell-outputWrapper">
+    <div class="jp-OutputArea jp-Cell-outputArea">
+     <div class="jp-OutputArea-child">
+      <div class="jp-OutputPrompt jp-OutputArea-prompt">
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+  <div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+   <div class="jp-Cell-inputWrapper">
+    <div class="jp-InputArea jp-Cell-inputArea">
+     <div class="jp-InputPrompt jp-InputArea-prompt">
+      In [13]:
+     </div>
+     <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+      <div class="CodeMirror cm-s-jupyter">
+       <div class="highlight hl-ipython3">
+        <pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">scatter_geo</span><span class="p">(</span><span class="n">globe_df_curr</span><span class="p">,</span> <span class="n">locations</span><span class="o">=</span><span class="s2">"iso_code"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"continent"</span><span class="p">,</span>
+                     <span class="n">hover_name</span><span class="o">=</span><span class="s2">"country"</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="s2">"co2"</span><span class="p">,</span>
+                     <span class="n">projection</span><span class="o">=</span><span class="s2">"natural earth"</span><span class="p">,</span> <span class="n">template</span><span class="o">=</span><span class="s2">"plotly_dark"</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+   <div class="jp-Cell-outputWrapper">
+    <div class="jp-OutputArea jp-Cell-outputArea">
+     <div class="jp-OutputArea-child">
+      <div class="jp-OutputPrompt jp-OutputArea-prompt">
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+  <div class="jp-Cell-inputWrapper">
+   <div class="jp-InputPrompt jp-InputArea-prompt">
+   </div>
+   <div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+    <p>
+     <a href="https://github.com/CS328-Spring-2022/writing-assignment-divyanshu_mihir_harshil">
+      <img alt="Repo" src="https://img.shields.io/badge/GitHub-WritingAssignment-brightgreen"/>
      </a>
     </p>
    </div>
